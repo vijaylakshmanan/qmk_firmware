@@ -65,9 +65,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       NO , NO , NO , NO , NO , NO ,                NO , NO ,LBRC,RBRC,LPRN,RPRN,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      NO , NO , NO , NO , NO , NO , NO ,      NO , NO ,MINS,EQL ,PIPE, NO , NO ,
+     LSFT, NO , NO , NO , NO , NO , NO ,      NO , NO ,MINS,EQL ,PIPE, NO , NO ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                        NO , NO ,LSFT ,         NO , NO , NO
+                        NO , NO , NO  ,         NO , NO , NO
   //                  `----+----+----'        `----+----+----'
   )
 };

@@ -12,9 +12,20 @@ enum custom_keycodes {
   RAISE,
 };
 
+//Tap Dance Declarations
+enum {
+  TD_Q_TAB = 0
+};
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_Q_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_TAB)
+};
+
 #define KC_       KC_TRNS
 #define KC_LOWR   LT(_LOWER, KC_F)  // LOWER
 #define KC_RISE   LT(_RAISE, KC_SPC)  // RAISE
+#define KC_QTAB   TD(TD_Q_TAB)  // TAP DANCE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -22,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
       1  , 2  , 3  , 4  , 5  ,ESC,                PGUP, 6  , 7  , 8  , 9  , 0  ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      Q  , W  , E  , R  , T  ,CAPS,               PGDN, Y  , U  , I  , O  , P  ,
+     QTAB, W  , E  , R  , T  ,CAPS,               PGDN, Y  , U  , I  , O  , P  ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       A  , S  , D  ,LOWR, G  ,HOME,               END,  H  , J  , K  , L  ,SCLN,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|

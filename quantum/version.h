@@ -1,2 +1,2 @@
-#define QMK_VERSION "22895e-dirty"
-#define QMK_BUILDDATE "2018-11-17-18:09:37"
+#define QMK_VERSION "eba429-dirty"
+#define QMK_BUILDDATE "2018-11-17-18:25:12"

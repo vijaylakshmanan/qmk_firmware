@@ -14,7 +14,7 @@ enum custom_keycodes {
 
 #define KC_       KC_TRNS
 #define KC_LOWR   LT(_LOWER, KC_F)  // LOWER
-#define KC_RISE   LT(_RAISE, KC_LSFT)  // RAISE
+#define KC_RISE   LT(_RAISE, KC_SPC)  // RAISE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -24,11 +24,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       Q  , W  , E  , R  , T  ,CAPS,               PGDN, Y  , U  , I  , O  , P  ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      A  , S  , D  ,LOWR, G  ,HOME                END,  H  , J  , K  , L  ,SCLN,
+      A  , S  , D  ,LOWR, G  ,HOME,               END,  H  , J  , K  , L  ,SCLN,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      Z  , X  , C  , V  , B  ,DEL, UNDO      AGIN,BKSPC, N  , M  ,COMM,DOT,SLSH
+      Z  , X  , C  , V  , B  ,DEL, UNDO,     AGIN,BSPC, N  , M  ,COMM,DOT,SLSH,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       LALT, SPC,RISE,        LCTL,SPC, ENT
+                       LALT ,RISE,LSFT,        LCTL,SPC, ENT
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -38,11 +38,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       NO , NO , NO , NO , NO , NO ,                NO , NO , NO , NO , NO , NO ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      NO , NO , NO ,TRNS, NO , NO ,               VOLU,LEFT,DOWN, UP ,RGTH, NO ,
+      NO , NO , NO ,TRNS, NO , NO ,               VOLU,LEFT,DOWN, UP ,RGHT, NO ,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      NO , NO , NO , NO , NO , NO ,TRNS,      NO ,VOLD, NO , NO , NO , NO , NO ,
+      NO , NO , NO , NO , NO , NO , NO ,      NO ,VOLD, NO , NO , NO , NO , NO ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                        NO , NO , NO ,         NO  , NO , NO
+                        NO , NO , TRNS,         NO  , NO , NO
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
       NO , NO , NO , NO , NO , NO , NO ,      NO , NO ,MINS,EQL ,PIPE, NO , NO ,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                        NO , NO ,TRNS ,         NO , NO , NO
+                        NO , NO , NO  ,         NO , NO , NO
   //                  `----+----+----'        `----+----+----'
   )
 };

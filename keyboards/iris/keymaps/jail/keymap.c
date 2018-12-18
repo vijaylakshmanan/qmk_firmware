@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
      GRV , NO , NO , NO , NO , NO ,                NO , NO , NO , NO , NO , NO ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      NO , NO , NO , NO , NO , NO ,                NO , NO ,SLSH,BSLS,LCBR,RCBR,
+     TILD, NO , NO , NO , NO , NO ,                NO , NO ,SLSH,BSLS,LCBR,RCBR,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
       NO , NO , NO , NO , NO , NO ,                NO , NO ,LBRC,RBRC,LPRN,RPRN,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|

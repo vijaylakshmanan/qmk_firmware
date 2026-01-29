@@ -13,6 +13,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+//#include "sofle.h"
+#include "oled_driver.h"
+#include "timer.h"
+
 #include QMK_KEYBOARD_H
 
 enum sofle_layers {
@@ -29,6 +33,14 @@ enum planck_keycodes {
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define BOTH MO(_BOTH)
+
+// For tracking time
+static uint32_t oled_timer = 0;
+
+#define MATRIX_WIDTH 21  // Adjust based on OLED width
+#define MATRIX_HEIGHT 8  // Adjust based on OLED height
+static char matrix_chars[] = "01ABCDEF";  // You can customize this
+static uint8_t matrix_state[MATRIX_WIDTH];
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -77,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, LCA(KC_E),    LCA(KC_R), LCA(KC_T),     _______,                      _______, _______, _______, _______,  _______, _______,
     _______, _______, LCA(KC_D),    LCA(KC_F), LCA(KC_G),     _______,                      _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
     KC_LSFT, _______, LCA(KC_LEFT), _______,   LCA(KC_RIGHT), _______,  _______,   _______, _______, _______, _______, _______,  _______, KC_LSFT,
-                      _______,      _______,   _______,       _______, _______,    _______, _______,  _______,  _______, _______
+                      _______,      _______,   _______,       _______, _______,    _______, BOTH,    _______,  _______, _______
 ),
 
 /*
@@ -148,3 +160,88 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 };
+
+// Render HH:MM clock using internal timer
+void show_wpm(void) {
+    // static char time_str[6];
+    // uint32_t ms = timer_read32() / 1000;
+    // uint8_t hour = (ms / 3600) % 24;
+    // uint8_t minute = (ms / 60) % 60;
+
+    // snprintf(time_str, sizeof(time_str), "%02d:%02d", hour, minute);
+    // oled_clear();
+    // oled_write_ln(time_str, false);
+
+  char wpm_str[10];
+  snprintf(wpm_str, sizeof(wpm_str), "WPM: %03d", get_current_wpm());
+  oled_write_ln(wpm_str, false);
+
+}
+
+// Render Caps Lock + Modifiers
+void render_status_keys(void) {
+    oled_clear();
+
+    // CAPS LOCK
+    if (host_keyboard_led_state().caps_lock) {
+        oled_write_ln("CAPS LOCK", false);
+    } else {
+        oled_write_ln("caps off", false);
+    }
+
+    // Modifier keys
+    uint8_t mod = get_mods() | get_oneshot_mods();
+    oled_write_ln("", false); // Spacer
+
+    if (mod & MOD_MASK_SHIFT) oled_write_ln("SHIFT", false);
+    if (mod & MOD_MASK_CTRL)  oled_write_ln("CTRL", false);
+    if (mod & MOD_MASK_ALT)   oled_write_ln("ALT", false);
+    if (mod & MOD_MASK_GUI)   oled_write_ln("GUI", false);
+}
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+  if (is_keyboard_master()) {
+        return OLED_ROTATION_270;
+    } else {
+        return OLED_ROTATION_270;
+    }
+}
+
+void init_matrix_animation(void) {
+    for (int i = 0; i < MATRIX_WIDTH; i++) {
+        matrix_state[i] = rand() % MATRIX_HEIGHT;
+    }
+}
+
+void render_matrix(void) {
+    oled_clear();
+    for (int x = 0; x < MATRIX_WIDTH; x++) {
+        for (int y = 0; y < MATRIX_HEIGHT; y++) {
+            if (y == matrix_state[x]) {
+                char c = matrix_chars[rand() % (sizeof(matrix_chars) - 1)];
+                oled_set_cursor(x, y);
+                oled_write_char(c, false);
+            }
+        }
+        matrix_state[x] = (matrix_state[x] + 1) % MATRIX_HEIGHT;
+    }
+}
+
+// Update timeout
+bool oled_task_user(void) {
+    // Refresh OLED timeout
+    oled_timer = timer_read32();
+
+    // LEFT HALF
+    if (is_keyboard_master()) {
+        show_wpm();
+    } else {
+        show_wpm();
+    }
+    return false;
+}
+
+void keyboard_post_init_user(void) {
+    srand(timer_read());  // Seed random for Matrix
+    init_matrix_animation();
+}
